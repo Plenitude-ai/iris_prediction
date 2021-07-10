@@ -21,51 +21,64 @@ from sklearn.datasets import load_iris
 
 target_names = ['setosa', 'versicolor', 'virginica']
 
+def train_model(model_path="model.pkl"):
+    """Loads Iris from sklearn, fits a XGBoots and stores it to the passed argument
+    Returns X_test, y_test"""
+    X, y = load_iris(return_X_y=True, as_frame=True)
+    df = pd.concat([X, y], axis=1)
 
-X, y = load_iris(return_X_y=True, as_frame=True)
-df = pd.concat([X, y], axis=1)
+    # ### Train Test split
+    X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(df.drop("target", axis=1), df["target"])
 
-# ### Train Test split
+    # # Modelling
+    # ### XGB
+    model_xgb = xgboost.sklearn.XGBClassifier(use_label_encoder=False)
 
-X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(df.drop("target", axis=1), df["target"])
+    # ### Train
+    model_xgb.fit(X_train, y_train)
 
-# # Modelling
-# ### XGB
+    # # Serialization of model
+    with open(model_path, "wb") as file:
+        pickle.dump(model_xgb, file)
 
-model_xgb = xgboost.sklearn.XGBClassifier()
-
-# ### Train
-
-model_xgb.fit(X_train, y_train)
-
-
-pred = model_xgb.predict(X_test)
-pred_proba = model_xgb.predict_proba(X_test)
-
-# ### Evaluation
-# We clearly overfit our data, but no problem this is not the interesting part of the project
-
-sklearn.metrics.roc_auc_score(y_test, pred_proba, multi_class='ovr')
-
-# # Serialization of model
-
-with open("model.pkl", "wb") as file:
-    pickle.dump(model_xgb, file)
+    return X_test, y_test
     
+def evaluate_model(model, X_test, y_test):
+    """Returns AUC of given model"""
+    pred = model.predict(X_test)
+    pred_proba = model.predict_proba(X_test)
+    # ### Evaluation
+    # We clearly overfit our data, but no problem this is not the interesting part of the project
+    auc = sklearn.metrics.roc_auc_score(y_test, pred_proba, multi_class='ovr')
+    return auc
+
+
+def predict_observation(arg, model_path="model.pkl"):
+    if type(arg)==list:
+        observation = pd.DataFrame([arg], columns=["sepal length (cm)", "sepal width (cm)", "petal length (cm)", "petal width (cm)"])
+    else:
+        raise TypeError("arg should be List")
+    # # Prediction for 1 observation
+    with open(model_path, "rb") as file:
+        model_loaded = pickle.load(file)
+    pred_obs = model_loaded.predict(observation)
+
+    target_names = ['setosa', 'versicolor', 'virginica']
+    pred_name = target_names[int(pred_obs)]
+    return pred_name
 
 
 
 
-# # Prediction for 1 observation
+# # TRAINING MODEL
+# train_model(model_path="model.pkl")
 
-with open("model.pkl", "rb") as file:
-    model_loaded = pickle.load(file)
-
-
-observation = X_test.sample(n=1)
+# # GETTING THE ARGUMENTS
+# arg = [7.3, 2.9, 6.3, 1.8]
 
 
-pred_obs = model_loaded.predict(observation)
-pred_name = target_names[int(pred_obs)]
-print("\n\n\n")
-print(pred_name)
+
+# # PREDICTING ON OBSERVATION
+# pred_name = predict_observation(arg, model_path="model.pkl")
+# print("\n\n\n")
+# print(pred_name)

@@ -1,25 +1,37 @@
 # IMPORTS
-import pickle
-import pandas as pd
+import sys
+import modelling_script
+ 
 
-if __name__=="main":
+if __name__== '__main__':
+
+    # TRAINING MODEL
+    modelling_script.train_model(model_path="model.pkl")
 
     # GETTING THE ARGUMENTS
-    arg = [7.3, 2.9, 6.3, 1.8]
-    observation = pd.DataFrame([arg], columns=["sepal length (cm)", "sepal width (cm)", "petal length (cm)", "petal width (cm)"])
-
-
-    # OPENING MODEL
-    with open("model.pkl", "rb") as file:
-        model_loaded = pickle.load(file)
-
+    args_str = sys.argv[1:]
+    joint_str = " ".join([x for x in args_str])
+    list_str = joint_str.strip('[]').split(',')
+    arg = [float(x) for x in list_str]
+    print("arg, ", arg)
 
     # PREDICTING ON OBSERVATION
-    pred_obs = model_loaded.predict(observation)
-
-    target_names = ['setosa', 'versicolor', 'virginica']
-    pred_name = target_names[int(pred_obs)]
-    print("\n\n\n")
+    pred_name = modelling_script.predict_observation(arg, model_path="model.pkl")
+    print("\n")
     print(pred_name)
 
-    # GETTING BACK PREDICTION
+
+
+
+
+
+# # FLASK
+# from flask import Flask
+# app = Flask(__name__)
+# @app.route('/')
+# def hello_world():
+#     return 'Hey, we have Flask in a Docker container!'
+# if __name__== '__main__':
+#   app.run(debug=True, use_reloader=False) #, host='0.0.0.0'
+
+  
