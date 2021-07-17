@@ -54,6 +54,9 @@ def evaluate_model(model, X_test, y_test):
 
 
 def predict_observation(arg, model_path="model.pkl"):
+    """
+    Opens model using model_path, and uses arg to predict the right type of flower (setosa, virginca...) 
+    """
     if type(arg)==list:
         observation = pd.DataFrame([arg], columns=["sepal length (cm)", "sepal width (cm)", "petal length (cm)", "petal width (cm)"])
     else:
