@@ -10,7 +10,8 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 COPY . /app
 
-# EXPOSE 5000
+EXPOSE 5000
+VOLUME ["/app"]
 
 ENTRYPOINT [ "python" ]
 CMD ["src/main.py"]
