@@ -6,5 +6,5 @@ services:
         ports:
             - "80:5000"
         volumes:
-            - /mnt/c//Users/axeld/JUPYTER--TPs/github_projects/iris_prediction:/app
+            - .:/app
         restart: always
