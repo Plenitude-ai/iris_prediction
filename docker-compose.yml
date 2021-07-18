@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+    iris_prediction:
+        image: iris_prediction
+        ports:
+            - "80:5000"
+        volumes:
+            - /mnt/c//Users/axeld/JUPYTER--TPs/github_projects/iris_prediction:/app
+        restart: always
