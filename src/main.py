@@ -1,33 +1,4 @@
 
- 
-
-# STATIC  : USES THE PASSED ARGUMENT FROM THE CMD
-# 
-# # IMPORTS
-# import sys
-# import modelling_script   
-# if __name__== '__main__':
-
-#     # GETTING THE ARGUMENTS
-#     args_str = sys.argv[1:]
-#     joint_str = " ".join([x for x in args_str])
-#     list_str = joint_str.strip('[]').split(',')
-#     arg = [float(x) for x in list_str]
-#     print("arg, ", arg)
-
-#     # # TRAINING MODEL
-#     # modelling_script.train_model(model_path="model.pkl")
-
-#     # PREDICTING ON OBSERVATION
-#     pred_name = modelling_script.predict_observation(arg, model_path="model.pkl")
-#     print("\n")
-#     print(pred_name)
-
-
-
-
-
-
 # # FLASK
 import pickle
 import flask
@@ -35,22 +6,31 @@ from flask import Flask, request
 from flask.json import jsonify
 import pandas as pd
 
+
+
 app = Flask(__name__)
+
 
 model_path = "model.pkl"
 MODEL = pickle.load(open(model_path, "rb"))
-
-# with open(model_path, "rb") as file:
-#         MODEL = pickle.load(file)
-
 TARGET_NAMES = ['setosa', 'versicolor', 'virginica']
-
-
 
 
 @app.route('/', methods=["GET"])
 def hello_world():
+    """
+    Home/index: Returns 'Welcome'
+    ---
+    get:
+      summary: "Index"
+      description: "returns 'welcome'"
+      responses:
+        "405":
+          description: "Invalid input"
+    """
     return 'Hey, we have Flask in a Docker container !'
+
+
 
 @app.route('/pred_args', methods=["GET"])
 def get_pred_args():
@@ -64,6 +44,8 @@ def get_pred_args():
     pred_obs = MODEL.predict(features)
     pred_name = TARGET_NAMES[int(pred_obs)]
     return pred_name
+
+
 
 @app.route('/pred_json', methods=["GET"])
 def get_pred_json():
@@ -79,7 +61,9 @@ def get_pred_json():
     pred_name = TARGET_NAMES[int(pred_obs)]
     return pred_name
 
+
+
 if __name__== '__main__':
-    app.run(debug=True, use_reloader=False, port=5000) #, host='0.0.0.0'
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
   

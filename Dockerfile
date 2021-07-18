@@ -10,5 +10,7 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 COPY . /app
 
+# EXPOSE 5000
+
 ENTRYPOINT [ "python" ]
-CMD ["src/main.py", ${observation}]
+CMD ["src/main.py"]
