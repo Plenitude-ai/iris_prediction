@@ -1,0 +1,3 @@
+build:
+    docker:
+        iris_prediction: Dockerfile
