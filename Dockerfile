@@ -17,6 +17,7 @@ VOLUME ["/app"]
 # CMD ["src/main.py"]
 
 # For heroku
-CMD ["./gunicorn_starter.sh"]
+# CMD ["./gunicorn_starter.sh"]
+CMD gunicorn --chdir src main:app -b 0.0.0.0:$PORT
 
 
