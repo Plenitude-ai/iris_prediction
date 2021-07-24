@@ -14,4 +14,7 @@ EXPOSE 5000
 VOLUME ["/app"]
 
 ENTRYPOINT [ "python" ]
-CMD ["src/main.py"]
+# CMD ["src/main.py"]
+
+# For heroku
+CMD ["wsgi.py"]
