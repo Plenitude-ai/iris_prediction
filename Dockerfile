@@ -13,8 +13,10 @@ COPY . /app
 EXPOSE 5000
 VOLUME ["/app"]
 
-ENTRYPOINT [ "python" ]
+# ENTRYPOINT [ "python" ]
 # CMD ["src/main.py"]
 
 # For heroku
-CMD ["wsgi.py"]
+CMD ["./gunicorn_starter.sh"]
+
+
