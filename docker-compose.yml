@@ -4,7 +4,7 @@ services:
     iris_prediction:
         build:
             context: prediction
-            dockerfile: Dockerfile
+            dockerfile: Dockerfile.prediction
         ports:
             - "80:5000"   
         environment: 
@@ -15,7 +15,7 @@ services:
     frontend:
         build:
             context: frontend
-            dockerfile: Dockerfile
+            dockerfile: Dockerfile.frontend
         ports:
             - "5000:5000"   
         environment: 
@@ -23,3 +23,5 @@ services:
         volumes:
             - ./frontend:/app
         restart: always
+        depends_on:
+            - iris_prediction

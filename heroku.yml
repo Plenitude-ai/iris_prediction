@@ -1,4 +1,6 @@
 build:
     docker:
-        iris_v2: Dockerfile
+        prediction: prediction/Dockerfile
+        frontend: frontend/Dockerfile
+
 
