@@ -23,6 +23,6 @@ VOLUME ["/app"]
 # For heroku
 # The --chdir allows to place the command from the folder you want (kind of a WORKDIR function)
 # CMD gunicorn --chdir src main:app -b 0.0.0.0:$PORT
-CMD gunicorn main:app -b 0.0.0.0:$PORT
+CMD gunicorn main:app -b 0.0.0.0:$PORT --reload
 
 
