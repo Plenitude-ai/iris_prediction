@@ -10,14 +10,19 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 COPY . /app
 
-EXPOSE 5000
+# # This is for the docker compose
+ARG PORT
+EXPOSE $PORT
 VOLUME ["/app"]
 
 # ENTRYPOINT [ "python" ]
 # CMD ["src/main.py"]
 
+
+
 # For heroku
 # The --chdir allows to place the command from the folder you want (kind of a WORKDIR function)
-CMD gunicorn --chdir src main:app -b 0.0.0.0:$PORT
+# CMD gunicorn --chdir src main:app -b 0.0.0.0:$PORT
+CMD gunicorn main:app -b 0.0.0.0:$PORT
 
 

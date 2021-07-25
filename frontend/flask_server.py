@@ -11,10 +11,9 @@ def home():
 
 ################### Page avec la carte ##################
 @app.route('/', methods=['GET'])
-def show_map():
+def show_prediction():
     #Coordonneeshttp://localhost:8888/notebooks/Documents/Work/Centrale/CodePython/HugZer%20Clean/FLASK.ipynb#
-    adress = request.form['text_id']
-    reponse = request.form['question']
+    adress = request.form['prediction_form']
     coord = get_coordonnees(adress)
     print(reponse)
     #Scores des stations
@@ -24,7 +23,7 @@ def show_map():
     df2 = meilleur_score(df, adress)
         
     #Renvoi du template HTML, avec la variable JSON
-    return render_template("map.html",
+    return flask.render_template("map.html",
                            coordinates = invert_coord(coord),
                            result = df,
                           result2 = df2,

@@ -3,7 +3,6 @@
 import pickle
 import flask
 from flask import Flask, request
-from flask.json import jsonify
 import pandas as pd
 
 
@@ -28,7 +27,7 @@ def hello_world():
         "405":
           description: "Invalid input"
     """
-    return 'Hey, we have Flask in a Docker container  !'
+    return 'Hey, we have Flask in a Docker container jvberouv !'
 
 
 
