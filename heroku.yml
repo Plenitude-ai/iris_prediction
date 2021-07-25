@@ -1,3 +1,4 @@
 build:
     docker:
-        web: Dockerfile
+        iris_v2: Dockerfile
+
