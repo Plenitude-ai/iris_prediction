@@ -27,7 +27,9 @@ def hello_world():
         "405":
           description: "Invalid input"
     """
-    return 'Hey, we have Flask in a Docker container krhvb  !'
+    return 'Welcome to the root of my project !\n \
+            See /pred_args?sepal_length=7.0&sepal_width=3.2&petal_length=4.7&petal_width=1.4, an example of prediction\n \
+                The (basic) interface is coming soon !'
 
 
 
