@@ -1,0 +1,29 @@
+<doctype html>
+<html lang= "en">
+
+	<head>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+		<title>Accueil</title>
+	</head>
+	<body>
+
+		<h1>Bonjour !<br>Bienvenue dans notre projet informatique ENSAE !<br><br></h1>
+		<img src="{{ url_for('static', filename='images/logoensae.jpg') }}" alt="Photo logo" class="center" />
+		<h2> L'objectif de cette web application est de trouver le type d'iris (setosa, versicolor ou virginica), en fonction de la taille des pétales.</h2>
+		<p><br></p>
+		
+		<form action= "." method= "GET" title ="Please enter the features of the flower you want to test">
+			<input type= "text" name= "text_id"><br>
+			<i> Merci de ne pas mettre d'accent !</i>
+			<h4>Voulez-vous afficher juste les points ou toute la carte Isochrone ?</h4>
+				<input type="radio" name="question" value="oui" id="oui" /> <label for="oui">Avec Isochrone</label>
+				<input type="radio" name="question" value="non" id="non" /> <label for="non">Sans Isochrone</label>
+			<br><h4><button type= "submit">Identifier</button></h4>
+		</form>
+
+		<footer>
+			© 2021 Axel Durand;
+		</footer>
+
+	</body>
+</html>

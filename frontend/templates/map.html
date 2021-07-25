@@ -1,0 +1,68 @@
+<doctype html>
+<HTML>
+<HEAD>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title>Carte Isochrone</title>
+</HEAD>
+<BODY>
+
+  <!-- <a href= "{{ url_for('home') }}"> Cliquez ICI pour revenir à l'accueil<br></a> -->
+  
+  <h1>Bonjour !<br>Bienvenue dans mon projet de prédiction d'iris online !<br><br></h1>
+  <img src="{{ url_for('static', filename='images/logoensae.jpg') }}" alt="Photo logo" class="center" />
+  <h2> L'objectif de cette web application est de trouver le type d'iris (setosa, versicolor ou virginica), en fonction de la taille des pétales.</h2>
+  <p><br></p>
+  
+  <form action= "." method= "GET" title ="Please enter the features of the flower you want to test">
+	<input type= "text" name= "text_id"><br>
+	<i> Merci de ne pas mettre d'accent !</i>
+	<h4>Voulez-vous afficher juste les points ou toute la carte Isochrone ?</h4>
+	  <input type="radio" name="question" value="oui" id="oui" /> <label for="oui">Avec Isochrone</label>
+	  <input type="radio" name="question" value="non" id="non" /> <label for="non">Sans Isochrone</label>
+	<br><h4><button type= "submit">Identifier</button></h4>
+  </form>
+
+
+  <p id="prediction"></p>
+  <script type="text/javascript">
+
+  // Getting prediction from Flask server
+  var prediction = {{prediction}};
+
+
+  // Navitia query for this isochron
+  var url1 = 'http:{{ prediction_service_name }}/pred_args?'+"sepal_length="+{{sepal_length}}+"&sepal_width="+{{sepal_width}}"&petal_length="+{{petal_length}}+"&petal_width="+{{petal_width}};
+
+
+  // Call navitia api
+  console.log('{{ oui }}')
+  if("{{ oui }}" == "oui") {
+	  $.ajax({
+		type: 'GET',
+		url: url1,
+		dataType: "json",
+		// headers: {
+		//   Authorization: 'Basic ' + btoa(sandboxToken)
+		// },
+		success: push_prediction_to_template,
+		error: function(xhr, textStatus, errorThrown) {
+		  alert('Error when trying to process isochron: "' + textStatus + '", "' + errorThrown + '"');
+		}
+	  });
+} else {
+  document.getElementById("prediction").innerHTML = "No prediction"
+}
+  </script>
+
+<footer>
+	<div></div>
+	<div></div>
+  <p>
+	Selon à quel moment vous relancé la page le score de certains éléments vont être modifiés car le temps de trajet évolue en temps réel
+  </p>
+  <p>© 2021 Axel Durand</p>
+</footer>
+</BODY>
+</HTML>
