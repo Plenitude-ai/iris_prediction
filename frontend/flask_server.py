@@ -29,9 +29,11 @@ def show_prediction():
     print("sepal_length, sepal_width, petal_length, petal_width : ", sepal_length, sepal_width, petal_length, petal_width)
     log.info("sepal_length, sepal_width, petal_length, petal_width : ", sepal_length, sepal_width, petal_length, petal_width)
 
-    # iris_prediction_service_name_in_docker_compose = "iris_prediction"
-    # root = "http:/"+iris_prediction_service_name_in_docker_compose+"/"
-    root = "https://iris-plenitudeai.herokuapp.com"
+    # root = "https://iris-plenitudeai.herokuapp.com"
+
+    # iris_prediction_service_name_in_docker_compose
+    root = "http://iris_prediction:80"
+    
     response = requests.get(root+'/pred_args?'+"sepal_length={}&sepal_width={}&petal_length={}&petal_width={}".format(sepal_length, sepal_width, petal_length, petal_width))
     prediction = response.text
     vars = {"prediction": prediction,
@@ -44,4 +46,4 @@ def show_prediction():
 
 ################### RUN DE L'APP #########################
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)

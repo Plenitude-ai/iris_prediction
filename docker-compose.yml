@@ -6,9 +6,20 @@ services:
             context: prediction
             dockerfile: Dockerfile
         ports:
-            - "5000:5000"   
+            - "80:5000"   
         environment: 
-            PORT: 5000 
+            PORT: 80 
         volumes:
             - ./prediction:/app
+        restart: always
+    frontend:
+        build:
+            context: frontend
+            dockerfile: Dockerfile
+        ports:
+            - "5000:5000"   
+        environment: 
+            PORT: 5000
+        volumes:
+            - ./frontend:/app
         restart: always
