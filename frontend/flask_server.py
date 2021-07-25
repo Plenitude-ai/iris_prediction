@@ -12,7 +12,8 @@ log = logging.getLogger("my-logger")
 @app.route('/')
 @app.route('/index')
 def home():
-    return flask.render_template("index.html", prediction="No prediction", prediction_service_name="iris_prediction")
+    vars = {"prediction": "NO PREDICTION"}
+    return flask.render_template("index.html", data=vars)
 
 ################### Page avec la carte ##################
 @app.route('/', methods=['POST'])
@@ -33,8 +34,12 @@ def show_prediction():
     root = "https://iris-plenitudeai.herokuapp.com"
     response = requests.get(root+'/pred_args?'+"sepal_length={}&sepal_width={}&petal_length={}&petal_width={}".format(sepal_length, sepal_width, petal_length, petal_width))
     prediction = response.text
-    # prediction="COEJBVOJB"
-    return flask.render_template("index.html", prediction=prediction)
+    vars = {"prediction": prediction,
+            "sepal_length": sepal_length,
+            "sepal_width": sepal_width,
+            "petal_length": petal_length,
+            "petal_width": petal_width}
+    return flask.render_template("index.html", data=vars)
 
 
 ################### RUN DE L'APP #########################

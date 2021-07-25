@@ -10,34 +10,47 @@
   <!-- <a href= "{{ url_for('home') }}"> Cliquez ICI pour revenir à l'accueil<br></a> -->
   
   <h1>Bonjour !<br>Bienvenue dans mon projet de prédiction d'iris online !<br><br></h1>
-  <img src="{{ url_for('static', filename='images/logoensae.jpg') }}" alt="Photo logo" class="center" />
+  <p>
+    <img src="{{ url_for('static', filename='images/heroku_logo.jfif') }}" alt="Logo Heroku" class="left" />
+    <img src="{{ url_for('static', filename='images/docker_logo.png') }}" alt="Logo Docker" class="right" />
+  </p>
+
   <h2> L'objectif de cette web application est de trouver le type d'iris (setosa, versicolor ou virginica), en fonction de la taille des pétales.</h2>
   <p><br></p>
   
   <form action= "." method="POST" title ="Please enter the features of the flower you want to test">
-    <label for="sepal_length">sepal_length (ex : 7.3 cm) :</label>
-    <input type="number" name="sepal_length" value=7.3><br>
+    <label for="sepal_length">sepal_length (ex : 7.3 cm) :</label> 
+    <input type="number" name="sepal_length" value=7.3 step=0.01><br>
 
     <label for="sepal_width">sepal_width (ex : 2.9 cm) :</label>
-    <input type="number" name="sepal_width" value=2.9><br>
+    <input type="number" name="sepal_width" value=2.9 step=0.01><br>
 
     <label for="petal_length">petal_length (ex : 6.3 cm) :</label>
-    <input type="number" name="petal_length" value=6.3><br>
+    <input type="number" name="petal_length" value=6.3 step=0.01><br>
 
     <label for="petal_width">petal_width (ex : 1.8 cm) :</label>
-    <input type="number" name="petal_width" value=1.8><br>
+    <input type="number" name="petal_width" value=1.8 step=0.01><br>
 
 
 	<i> Un exemple de prediction</i>
 	<br><h4><button type= "submit">Identifier</button></h4>
   </form>
 
+  <p id="features"></p>
 
   <p id="prediction"></p>
 
-  <script>
-    var prediction_str =  "{{prediction}}";
-    document.getElementById("prediction").innerHTML = prediction_str;
+  <script type="text/javascript">
+    vars = {{data|tojson}};
+    var sepal_length_str =  vars["sepal_length"];
+    var sepal_width_str =  vars["sepal_width"];
+    var petal_length_str =  vars["petal_length"];
+    var petal_width_str =  vars["petal_width"];
+
+    document.getElementById("features").innerHTML = "For the features : sepal_length : "+sepal_length_str+" (cm), sepal_width : "+sepal_width_str+" (cm), petal_length : "+petal_length_str+" (cm), petal_width : "+petal_width_str+" (cm)"; 
+
+    var prediction_str =  vars["prediction"];
+    document.getElementById("prediction").innerHTML = "The prediction is : " + prediction_str;
   </script>
 
 
@@ -48,7 +61,7 @@
 	<div></div>
 	<div></div>
   <p>
-	Selon à quel moment vous relancé la page le score de certains éléments vont être modifiés car le temps de trajet évolue en temps réel
+    Powered by Heroku and Docker
   </p>
   <p>© 2021 Axel Durand</p>
 </footer>
@@ -59,8 +72,5 @@
 
 </BODY>
 
-
-<!-- <script src="../js/main_script.js">
-</script> -->
 
 </HTML>
