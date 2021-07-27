@@ -1,0 +1,1 @@
+prediction_v3: gunicorn --chdir prediction main:app -b 0.0.0.0:$PORT

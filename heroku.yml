@@ -1,6 +1,6 @@
 build:
     docker:
-        prediction: prediction/Dockerfile.prediction
-        frontend: frontend/Dockerfile.frontend
+        prediction_v3: prediction/Dockerfile.prediction_v3
+        # frontend: frontend/Dockerfile.frontend
 
 
