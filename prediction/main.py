@@ -4,10 +4,11 @@ import pickle
 import flask
 from flask import Flask, request
 import pandas as pd
-
+import flasgger
 
 
 app = Flask(__name__)
+flasgger.Swagger(app)
 
 
 model_path = "model.pkl"
@@ -17,24 +18,34 @@ TARGET_NAMES = ['setosa', 'versicolor', 'virginica']
 
 @app.route('/', methods=["GET"])
 def hello_world():
-    """
-    Home/index: Returns 'Welcome'
-    ---
-    get:
-      summary: "Index"
-      description: "returns 'welcome'"
-      responses:
-        "405":
-          description: "Invalid input"
-    """
-    return 'Welcome to the root of my project !\n \
-            See /pred_args?sepal_length=7.0&sepal_width=3.2&petal_length=4.7&petal_width=1.4, an example of prediction\n \
-                The (basic) interface is coming soon !'
+    # """Home/index: Returns 'Welcome'
+    # ---
+    # get:
+    #   summary: "Index"
+    #   description: "returns 'welcome'"
+    #   responses:
+    #     "405":
+    #       description: "Invalid input"
+    # """
+    return 'Welcome to the root of my project !'
 
 
 
 @app.route('/pred_args', methods=["GET"])
 def get_pred_args():
+    """
+    Get the result of the request using the passed arguments
+    ---
+    parameters:
+        - sepal_length
+          in: query
+          type: number
+          required: true
+    responses:
+        500:
+            description: Prediciton
+
+    """
     # Retrieve query parameters related to this request.
     sepal_length = float(flask.request.args.get('sepal_length'))
     sepal_width = float(flask.request.args.get('sepal_width'))
