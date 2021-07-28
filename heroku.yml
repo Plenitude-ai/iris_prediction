@@ -1,5 +1,5 @@
 build:
     docker:
         web: prediction/Dockerfile.web
-        # worker: frontend/Dockerfile.frontend
+        # worker: frontend/Dockerfile.worker
 
