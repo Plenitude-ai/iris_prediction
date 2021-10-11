@@ -34,7 +34,7 @@ def show_prediction():
     # root = "https://iris-plenitudeai.herokuapp.com"
 
     # iris_prediction_service_name_in_docker_compose
-    root = "http://iris_prediction:80"
+    root = "http://iris_prediction:81"
     
     response = requests.get(root+'/pred_args?'+"sepal_length={}&sepal_width={}&petal_length={}&petal_width={}".format(sepal_length, sepal_width, petal_length, petal_width))
     prediction = response.text
